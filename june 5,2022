@@ -1,0 +1,47 @@
+class Solution {
+    int count=0;
+    public int totalNQueens(int n) {
+        if(n==1)
+            return 1;
+        if(n==0)
+            return 0;
+        char board[][]=new char[n][n];
+        nqueens(n,0,board);
+        return count;
+    }
+    boolean isSafe(int row,int i,int n,char[][]board){
+        
+        for(int r=1;r<n;r++){
+        if(row-r>=0)
+        if(board[row-r][i]=='Q')
+            return false;
+        }
+        for(int r=1;r<n;r++){
+            if(row-r>=0&&i-r>=0)
+        if(board[row-r][i-r]=='Q')
+            return false;
+            }
+        for(int r=1,k=1;r<n&&k<n;r++,k++){
+            if(row-r>=0&&i+k<n)
+                if(board[row-r][i+k]=='Q')
+                    return false;
+        }
+        return true;
+    }
+    void nqueens(int n,int row,char[][]board){
+        if(row==n){
+            count++;
+            return;
+        }
+        for(int i=0;i<n;i++){
+            if(isSafe(row,i,n,board)){
+                board[row][i]='Q';
+                nqueens(n,row+1,board);
+                board[row][i]='.';
+            }
+        }
+        
+        
+    }
+   
+}
